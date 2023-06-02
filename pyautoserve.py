@@ -1,3 +1,4 @@
+import os
 import time
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from pathlib import Path
@@ -71,22 +72,16 @@ class FileObserver:
         self._root = Path(root)
         self._registry = HashRegistry()
 
-    def scan(self, pattern: str = "*") -> Generator[Path, None, None]:
+    def scan(self) -> Generator[Path, None, None]:
         """
-        Yield all existing files (of any kind, including directories) matching the
-        given relative pattern, anywhere in this subtree.
-
-        Args:
-            root (Path): The root to start at.
-            ext (str, optional): The file extension to yield. Defaults to "*".
+        Yield all existing files anywhere in the subtree of the root.
 
         Yields:
-            Generator[Path, None, None]: The Path of the file with the given file
-            extension.
+            Generator[Path, None, None]: The Path of the file.
         """
-        for p in self._root.rglob(pattern):
-                if p.is_file():
-                    yield p
+        for root, _, files in os.walk(self._root):
+            for file in files:
+                yield Path(os.path.join(root, file))
 
     def observe(self, pattern: str = "*") -> Path:
         """
