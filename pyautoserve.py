@@ -187,7 +187,7 @@ class AutoreloadHTTPServer:
         self._httpd.serve_forever()
 
     def _new_server_process(self) -> mp.Process:
-        return mp.Process(target=self._serve, name="hummingbird_server")
+        return mp.Process(target=self._serve, name="autoreload_http_server")
 
 
 if __name__ == "__main__":
