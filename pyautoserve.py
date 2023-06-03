@@ -109,7 +109,7 @@ class FileObserver:
         return changed_files
 
 
-class HummingbirdServer(HTTPServer):
+class Server(HTTPServer):
     pass
 
 
@@ -125,7 +125,7 @@ class AutoreloadHTTPServer:
         port: int = 8000,
         root: str = ".",
         delay: float = 0.001,
-        server_class: TCPServer = HummingbirdServer,
+        server_class: TCPServer = Server,
         request_class: BaseHTTPRequestHandler = RequestHandler
     ) -> None:
         self._delay = delay
