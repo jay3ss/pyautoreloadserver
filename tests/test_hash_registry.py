@@ -1,5 +1,5 @@
 import unittest
-from ..pyautoserve import HashRegistry
+from pyautoserve import HashRegistry
 
 
 class HashRegistryTests(unittest.TestCase):
