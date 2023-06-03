@@ -8,7 +8,6 @@ from typing import Any, Callable, Generator, Hashable
 
 
 class HashRegistry:
-
     def __init__(self, hash_func: Callable = hash) -> None:
         self._registry = dict()
         self._hash = hash_func
@@ -73,7 +72,6 @@ class HashRegistry:
 
 
 class FileObserver:
-
     def __init__(self, root: str = ".") -> None:
         self._root = Path(root)
         self._registry = HashRegistry()
@@ -118,7 +116,6 @@ class RequestHandler(SimpleHTTPRequestHandler):
 
 
 class AutoreloadHTTPServer:
-
     def __init__(
         self,
         host: str = "localhost",
@@ -126,7 +123,7 @@ class AutoreloadHTTPServer:
         root: str = ".",
         delay: float = 0.001,
         server_class: TCPServer = Server,
-        request_class: BaseHTTPRequestHandler = RequestHandler
+        request_class: BaseHTTPRequestHandler = RequestHandler,
     ) -> None:
         self._delay = delay
         self._observer = FileObserver(Path(root))
