@@ -168,7 +168,7 @@ class AutoreloadHTTPServer:
         """
         Stops the server
         """
-        self._server.shutdown()
+        self._httpd.shutdown()
 
     def _restart_server_process(self) -> None:
         """
