@@ -187,6 +187,6 @@ class AutoreloadHTTPServer:
         return mp.Process(target=self._serve, name="autoreload_http_server")
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
     server = AutoreloadHTTPServer(port=5555)
     server.serve()
