@@ -96,7 +96,7 @@ class FileObserver:
         """
         changed_files = []
         for file in self.scan():
-            last_changed = os.stat(file).st_mtime
+            last_changed = os.path.getmtime(file)
             if file not in self._registry:
                 self._registry.register(file, last_changed)
                 changed_files.append(file)
