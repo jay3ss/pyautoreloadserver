@@ -129,6 +129,7 @@ class AutoreloadHTTPServer:
         self._observer = FileObserver(Path(root))
         self._httpd = server_class((host, port), request_class)
         self._httpd_process = None
+        self._stop_flag = False
 
     def serve(self) -> None:
         """
@@ -139,7 +140,7 @@ class AutoreloadHTTPServer:
         print(f"Watching {num_files} files.")
         try:
             just_loaded = True
-            while True:
+            while not self._stop_flag:
                 changed_files = self._observer.observe()
                 if changed_files and not just_loaded:
                     num_files = len(changed_files)
@@ -153,6 +154,12 @@ class AutoreloadHTTPServer:
         except KeyboardInterrupt as e:
             self._stop_server_process()
             print(e)
+
+    def stop(self) -> None:
+        """
+        Stops serving
+        """
+        self._stop_flag = True
 
     def _start_server_process(self) -> None:
         """
