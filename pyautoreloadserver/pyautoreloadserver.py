@@ -32,13 +32,14 @@ class HashRegistry:
             bool: True if the key-value pair was successfully registered, False
             otherwise.
         """
-        if key not in self._registry:
+        if self._registry.get(key) is None:
             self._registry[key] = self._hash(value)
-        else:
-            if not force:
-                return False
-            else:
-                return self.update(key, value)
+            return True
+        elif force:
+            self.update(key, value)
+            return True
+
+        return False
 
     def update(self, key: Hashable, value: Hashable) -> None:
         """
