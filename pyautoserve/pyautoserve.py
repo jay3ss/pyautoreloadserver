@@ -1,3 +1,4 @@
+import logging
 import multiprocessing as mp
 import os
 import time
@@ -5,6 +6,9 @@ from http.server import BaseHTTPRequestHandler, HTTPServer, SimpleHTTPRequestHan
 from pathlib import Path
 from socketserver import TCPServer
 from typing import Any, Callable, Generator, Hashable
+
+
+mp.log_to_stderr(logging.ERROR)
 
 
 class HashRegistry:
@@ -122,12 +126,13 @@ class AutoreloadHTTPServer:
         port: int = 8000,
         root: str = ".",
         delay: float = 0.001,
-        server_class: TCPServer = Server,
-        request_class: BaseHTTPRequestHandler = RequestHandler,
+        ServerClass: TCPServer = Server,
+        RequestClass: BaseHTTPRequestHandler = RequestHandler,
     ) -> None:
         self._delay = delay
         self._observer = FileObserver(Path(root))
-        self._httpd = server_class((host, port), request_class)
+        RequestHandlerClass = create_request_handler_class(root, RequestClass)
+        self._httpd = ServerClass((host, port), RequestHandlerClass)
         self._httpd_process = None
         self._stop_flag = False
 
@@ -175,13 +180,13 @@ class AutoreloadHTTPServer:
         """
         Stops the server
         """
-        self._httpd.shutdown()
+        self._httpd_process.terminate()
 
     def _restart_server_process(self) -> None:
         """
         Restarts the server
         """
-        self._httpd_process.terminate()
+        self._stop_server_process()
         self._start_server_process()
 
     def _serve(self) -> None:
@@ -194,6 +199,44 @@ class AutoreloadHTTPServer:
         return mp.Process(target=self._serve, name="autoreload_http_server")
 
 
+def create_request_handler_class(
+        directory: str, RequestHandlerClass=RequestHandler
+    ) -> BaseHTTPRequestHandler:
+    class CustomRequestHandler(RequestHandlerClass):
+        def __init__(self, *args, **kwargs) -> None:
+            super().__init__(*args, directory=directory, **kwargs)
+
+    return CustomRequestHandler
+
+
 if __name__ == "__main__": # pragma: no cover
-    server = AutoreloadHTTPServer(port=5555)
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Run the server")
+    parser.add_argument(
+        "-r",
+        dest="root",
+        type=str,
+        help="The root directory to monitor",
+    )
+    parser.add_argument(
+        "-p",
+        action="store",
+        dest="port",
+        default=8000,
+        type=int,
+        help="The port to use",
+    )
+    parser.add_argument(
+        "-n",
+        action="store",
+        dest="name",
+        default="localhost",
+        type=str,
+        help="The host name to use",
+    )
+
+    args = parser.parse_args()
+
+    server = AutoreloadHTTPServer(port=args.port, root=args.root)
     server.serve()
