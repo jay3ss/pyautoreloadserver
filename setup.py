@@ -9,10 +9,10 @@ extras_require = (here / "requirements.txt").read_text().splitlines()
 
 
 setup(
-    name="pyautoserve",
+    name="pyautoreloadserver",
     version="0.0.1",
     author="Jay Ess",
-    description="A short description of your package",
+    description="A simple HTTP server that reloads when a file change is detected",
     url="https://github.com/jay3ss/pyautoserve",
     long_description=readme,
     packages=find_packages(),

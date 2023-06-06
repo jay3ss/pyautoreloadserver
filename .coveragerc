@@ -1,2 +1,2 @@
 [run]
-source = pyautoserve
+source = pyautoreloadserver

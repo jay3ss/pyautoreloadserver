@@ -3,7 +3,7 @@ import unittest.mock
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-from pyautoserve import FileObserver
+from pyautoreloadserver import FileObserver
 
 
 class FileObserverTests(unittest.TestCase):
