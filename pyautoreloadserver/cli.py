@@ -9,6 +9,7 @@ def main():
     parser.add_argument(
         "-r",
         dest="root",
+        default=".",
         type=str,
         help="The root directory to monitor",
     )
