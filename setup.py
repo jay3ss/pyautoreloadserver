@@ -13,7 +13,7 @@ setup(
     version="0.0.1",
     author="Jay Ess",
     description="A simple HTTP server that reloads when a file change is detected",
-    url="https://github.com/jay3ss/pyautoserve",
+    url="https://github.com/jay3ss/pyautoreloadserver",
     long_description=readme,
     packages=find_packages(),
     classifiers=[
