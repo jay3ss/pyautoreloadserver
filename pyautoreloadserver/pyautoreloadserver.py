@@ -41,15 +41,22 @@ class HashRegistry:
 
         return False
 
-    def update(self, key: Hashable, value: Hashable) -> None:
+    def update(self, key: Hashable, value: Hashable) -> bool:
         """
         Updates the key-value pair in the registry.
 
         Args:
             key (Hashable): They key.
             value (Hashable): The value.
+
+        Returns:
+            bool: True if the update was successful, False otherwise
         """
-        self._registry[key] = self._hash(value)
+        if key in self._registry:
+            self._registry[key] = self._hash(value)
+            return True
+        else:
+            return False
 
     def compare(self, key: Hashable, value: Hashable) -> bool:
         """
