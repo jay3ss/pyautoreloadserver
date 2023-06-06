@@ -24,4 +24,9 @@ setup(
         "Programming Language :: Python :: 3.11",
     ],
     extras_require={"dev": extras_require},
+    entry_points={
+    'console_scripts': [
+        'pyautoreloadserver = pyautoreloadserver-cli:main',
+        ],
+    },
 )
