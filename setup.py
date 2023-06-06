@@ -25,8 +25,8 @@ setup(
     ],
     extras_require={"dev": extras_require},
     entry_points={
-    'console_scripts': [
-        'pyautoreloadserver = pyautoreloadserver-cli:main',
+        "console_scripts": [
+            "pyautoreloadserver = pyautoreloadserver.cli:main",
         ],
     },
 )
