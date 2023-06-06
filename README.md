@@ -1,6 +1,6 @@
 # PyAutoReloadServer
 
-PyAutoReloadServer is a Python package that provides an auto-reloading HTTP server for serving files from a specified directory. It is designed to simplify the process of serving and monitoring files during development or local testing.
+PyAutoReloadServer is a Python package that provides an auto-reloading HTTP server for serving files from a specified directory. It is designed to simplify the process of serving and monitoring files during **development** or **local testing**.
 
 ## Features
 
@@ -18,7 +18,19 @@ pip install pyautoreloadserver
 
 ## Usage
 
-To use PyAutoReloadServer, follow these steps:
+To use PyAutoReloadServer, from the command line run:
+
+```shell
+pyautoreloadserver -r /path/to/root -p 8000 -n localhost
+```
+
+This will start the server with the specified configuration. Here's what the flags mean:
+
+- `-r`: is the root directory that you want to monitor
+- `-p`: is the port that you want to use
+- `-n`: is the hostname that you want to use
+
+To use it in your program, follow these steps:
 
 1. Import the necessary classes and functions from the `pyautoreloadserver` module:
 
@@ -55,14 +67,6 @@ To use PyAutoReloadServer, follow these steps:
    ```
 
    If you want to stop the server programmatically, you can call the `stop` method.
-
-Alternatively, you can run the server directly from the command line:
-
-```shell
-pyautoreloadserver -r /path/to/root -p 8000 -n localhost
-```
-
-This will start the server with the specified configuration.
 
 ## License
 
