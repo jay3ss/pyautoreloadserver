@@ -1,5 +1,5 @@
 from .pyautoreloadserver import (
-    AutoreloadHTTPServer,
+    AutoReloadHTTPServer,
     FileObserver,
     HashRegistry,
     RequestHandler,
@@ -8,7 +8,7 @@ from .pyautoreloadserver import (
 )
 
 __all__ = [
-    "AutoreloadHTTPServer",
+    "AutoReloadHTTPServer",
     "FileObserver",
     "HashRegistry",
     "RequestHandler",

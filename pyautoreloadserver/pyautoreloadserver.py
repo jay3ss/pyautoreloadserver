@@ -119,7 +119,7 @@ class RequestHandler(SimpleHTTPRequestHandler):
     pass
 
 
-class AutoreloadHTTPServer:
+class AutoReloadHTTPServer:
     def __init__(
         self,
         host: str = "localhost",

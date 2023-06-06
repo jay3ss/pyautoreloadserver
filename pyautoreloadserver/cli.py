@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from pyautoreloadserver import AutoreloadHTTPServer
+from pyautoreloadserver import AutoReloadHTTPServer
 
 def main():
     import argparse
@@ -32,7 +32,7 @@ def main():
 
     args = parser.parse_args()
 
-    server = AutoreloadHTTPServer(port=args.port, root=args.root)
+    server = AutoReloadHTTPServer(port=args.port, root=args.root)
     server.serve()
 
 if __name__ == "__main__":

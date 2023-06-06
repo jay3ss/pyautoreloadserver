@@ -23,13 +23,13 @@ To use PyAutoReloadServer, follow these steps:
 1. Import the necessary classes and functions from the `pyautoreloadserver` module:
 
    ```python
-   from pyautoreloadserver import AutoreloadHTTPServer
+   from pyautoreloadserver import AutoReloadHTTPServer
    ```
 
-2. Create an instance of the `AutoreloadHTTPServer` class:
+2. Create an instance of the `AutoReloadHTTPServer` class:
 
    ```python
-   server = AutoreloadHTTPServer(
+   server = AutoReloadHTTPServer(
        host="localhost",
        port=8000,
        root="/path/to/root",
