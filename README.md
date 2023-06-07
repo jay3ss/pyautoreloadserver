@@ -1,73 +1,87 @@
-# PyAutoReloadServer
+Sure! Here's an updated README.md file based on the new code base:
 
-PyAutoReloadServer is a Python package that provides an auto-reloading HTTP server for serving files from a specified directory. It is designed to simplify the process of serving and monitoring files during **development** or **local testing**.
+# PyAutoReloadHTTPServer
 
-## Features
-
-- Automatic file change detection: PyAutoReloadServer monitors the specified directory for any changes to the files and automatically reloads the server whenever a change is detected.
-- Flexible customization: You can easily customize the server's behavior by specifying the host, port, root directory, delay between checks, and the request handler class.
-- Simple command-line interface: PyAutoReloadServer provides a convenient command-line interface for running the server, allowing you to quickly start serving files with minimal configuration.
+PyAutoReloadHTTPServer is a simple Python package that provides an HTTP server with automatic reloading functionality. It allows you to serve static files and dynamically reload them whenever they are modified, created, or destroyed. You no longer have to restart your local server to load changed files, this will serve files as they're added and changed. Give it a shot!
 
 ## Installation
 
 You can install PyAutoReloadServer using pip:
 
-```
+```bash
 pip install pyautoreloadserver
 ```
 
 ## Usage
 
-To use PyAutoReloadServer, from the command line run:
+The easiest way to run it, is to use it from the command line
 
 ```shell
-pyautoreloadserver -r /path/to/root -p 8000 -n localhost
+pyautoreloadserver -n localhost -p 5555 -r .
 ```
 
-This will start the server with the specified configuration. Here's what the flags mean:
+The flags above can be summarized as follows
 
-- `-r`: is the root directory that you want to monitor
-- `-p`: is the port that you want to use
-- `-n`: is the hostname that you want to use
+- `n`: the hostname
+- `p`: the port
+- `r`: the root directory to monitor
 
-To use it in your program, follow these steps:
+To use PyAutoReloadHTTPServer, create an instance of the `AutoReloadHTTPServer` class and call the `serve` method to start the server. By default, the server listens on `localhost` and port `8000`, and serves files from the current directory.
 
-1. Import the necessary classes and functions from the `pyautoreloadserver` module:
+```python
+from pyautoreloadserver import AutoReloadHTTPServer
 
-   ```python
-   from pyautoreloadserver import AutoReloadHTTPServer
-   ```
+# Create an instance of AutoReloadHTTPServer
+server = AutoReloadHTTPServer()
 
-2. Create an instance of the `AutoReloadHTTPServer` class:
+# Start the server
+server.serve()
+```
 
-   ```python
-   server = AutoReloadHTTPServer(
-       host="localhost",
-       port=8000,
-       root="/path/to/root",
-       delay=0.001,
-       RequestClass=RequestHandlerClass,
-   )
-   ```
+You can customize the server behavior by providing optional arguments to the `AutoReloadHTTPServer` initializer:
 
-   Customize the server's configuration according to your needs. The `host` and `port` parameters specify the server's listening address, while the `root` parameter determines the directory from which files will be served. The `delay` parameter controls the delay between file change checks.
+- `host` (str): The hostname or IP address to bind the server to (default: "localhost").
+- `port` (int): The port number to listen on (default: 8000).
+- `root` (str): The root directory to serve files from (default: ".").
+- `delay` (float): The delay between serving requests (default: 0.001 seconds).
+- `ServerClass` (TCPServer): The server class to use (default: HTTPServer).
+- `RequestHandlerClass` (BaseHTTPRequestHandler): The request handler class to use (default: SimpleHTTPRequestHandler).
 
-5. Start the server:
+```python
+from pyautoreloadserver import AutoReloadHTTPServer
 
-   ```python
-   server.serve()
-   ```
+# Create an instance of AutoReloadHTTPServer with custom options
+server = AutoReloadHTTPServer(host="0.0.0.0", port=8080, root="/path/to/files")
 
-   This method will start the server and monitor the specified directory for file changes. The server will automatically restart whenever a change is detected.
+# Start the server
+server.serve()
+```
 
-6. Stop the server (optional):
+Once the server is running, you can visit the specified host and port in your web browser to access the served files.
 
-   ```python
-   server.stop()
-   ```
+To stop the server, call the `stop` method:
 
-   If you want to stop the server programmatically, you can call the `stop` method.
+```python
+server.stop()
+```
+
+Although you'll probably want to start this in a separate thread/process because the server is running a loop that may block.
+
+## Logging
+
+PyAutoReloadHTTPServer logs informational messages using the `logging` module. By default, the log level is set to `logging.INFO`, but you can configure it according to your needs.
+
+```python
+import logging
+
+# Set the log level to DEBUG for more detailed logs
+logging.basicConfig(level=logging.DEBUG)
+```
+
+## Contributing
+
+Contributions to PyAutoReloadHTTPServer are welcome! If you find a bug, have a feature request, or want to contribute code, please open an issue or submit a pull request on the [GitHub repository](https://github.com/jay3ss/pyautoreloadserver).
 
 ## License
 
-PyAutoReloadServer is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+This project is licensed under the [MIT License](LICENSE).
