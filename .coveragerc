@@ -2,3 +2,4 @@
 source = pyautoreloadserver
 omit = pyautoreloadserver/__main__.py
        pyautoreloadserver/cli.py
+concurrency = multiprocessing
