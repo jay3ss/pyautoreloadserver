@@ -22,6 +22,7 @@ test:
 .PHONY: coverage
 coverage:
 	coverage run -m pytest
+	coverage combine
 	coverage report
 	coverage html
 
