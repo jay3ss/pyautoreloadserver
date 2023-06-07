@@ -36,7 +36,6 @@ class AutoReloadHTTPServer:
                 self._httpd.handle_request()
                 time.sleep(self._delay)
         except KeyboardInterrupt as e:
-            self._stop_server_process()
             print(e)
 
     def stop(self) -> None:
