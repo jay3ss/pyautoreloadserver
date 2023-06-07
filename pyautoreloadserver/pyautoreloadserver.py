@@ -4,6 +4,9 @@ from http.server import BaseHTTPRequestHandler, HTTPServer, SimpleHTTPRequestHan
 from socketserver import TCPServer
 
 
+logging.basicConfig(level=logging.INFO)
+
+
 class Server(HTTPServer):
     pass
 
@@ -32,11 +35,15 @@ class AutoReloadHTTPServer:
         Starts the server
         """
         try:
+            host, port = self._httpd.server_address
+            log_msg = f"Starting server. Visit http://{host}:{port}"
+            logging.info(log_msg    )
             while not self._stop_flag:
                 self._httpd.handle_request()
                 time.sleep(self._delay)
         except KeyboardInterrupt as e:
-            print(e)
+            logging.info("Quitting server...")
+            logging.error(e)
 
     def stop(self) -> None:
         """
