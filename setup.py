@@ -29,4 +29,8 @@ setup(
             "pyautoreloadserver = pyautoreloadserver.cli:main",
         ],
     },
+    package_dir={
+        "tests": "tests",
+        "pyautoreloadserver": "pyautoreloadserver",
+    }
 )
