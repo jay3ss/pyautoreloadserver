@@ -2,6 +2,7 @@
 
 from pyautoreloadserver import AutoReloadHTTPServer
 
+
 def main():
     import argparse
 
@@ -34,6 +35,7 @@ def main():
 
     server = AutoReloadHTTPServer(port=args.port, root=args.root)
     server.serve()
+
 
 if __name__ == "__main__":
     main()

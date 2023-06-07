@@ -32,5 +32,5 @@ setup(
     package_dir={
         "tests": "tests",
         "pyautoreloadserver": "pyautoreloadserver",
-    }
+    },
 )
