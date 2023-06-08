@@ -1,14 +1,16 @@
+import contextlib
 import logging
+import socket
 import time
-from http.server import BaseHTTPRequestHandler, HTTPServer, SimpleHTTPRequestHandler
+from http.server import BaseHTTPRequestHandler, HTTPServer, SimpleHTTPRequestHandler, ThreadingHTTPServer
 from socketserver import TCPServer
+
 
 
 logging.basicConfig(level=logging.INFO)
 
 
-class Server(HTTPServer):
-    pass
+BaseServerClass = ThreadingHTTPServer | HTTPServer
 
 
 class RequestHandler(SimpleHTTPRequestHandler):
@@ -22,11 +24,30 @@ class AutoReloadHTTPServer:
         port: int = 8000,
         root: str = ".",
         delay: float = 0.001,
-        ServerClass: TCPServer = Server,
+        ServerClass: BaseServerClass = None,
         RequestHandlerClass: BaseHTTPRequestHandler = RequestHandler,
     ) -> None:
+
+        # adapted from:
+        # https://github.com/python/cpython/blob/
+        # c2df09fb4d152fd0748790af38668841e4faca93/Lib/http/server.py#L1300
+        if not ServerClass:
+            class DualStackServer(ThreadingHTTPServer):
+
+                def server_bind(self):
+                    # suppress exception when protocol is IPv4
+                    with contextlib.suppress(Exception):
+                        self.socket.setsockopt(
+                            socket.IPPROTO_IPV6, socket.IPV6_V6ONLY, 0)
+                    return super().server_bind()
+
+                def finish_request(self, request, client_address): # pragma: no cover
+                    self.RequestHandlerClass(request, client_address, self,
+                                            directory=root)
+            ServerClass = DualStackServer
+
         self._delay = delay
-        RequestHandlerClass.directory = root
+        self._root = root
         self._httpd = ServerClass((host, port), RequestHandlerClass)
         self._stop_flag = False
 
@@ -35,8 +56,9 @@ class AutoReloadHTTPServer:
         Starts the server
         """
         try:
+            root = self._root
             host, port = self._httpd.server_address
-            log_msg = f"Starting server. Visit http://{host}:{port}"
+            log_msg = f"Serving {root}. Visit http://{host}:{port}"
             logging.info(log_msg    )
             while not self._stop_flag:
                 self._httpd.handle_request()
