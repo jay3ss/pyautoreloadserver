@@ -10,7 +10,7 @@ extras_require = (here / "requirements.txt").read_text().splitlines()
 
 setup(
     name="pyautoreloadserver",
-    version="0.0.1",
+    version="0.0.2",
     author="Jay Ess",
     description="A simple HTTP server that serves files, even on file change",
     url="https://github.com/jay3ss/pyautoreloadserver",
