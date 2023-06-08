@@ -1,4 +1,3 @@
-import time
 import unittest
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from multiprocessing import Process
@@ -6,14 +5,6 @@ from pathlib import Path
 
 from pyautoreloadserver import AutoReloadHTTPServer
 from tests.client import HttpClient
-
-
-class Server(HTTPServer):
-    pass
-
-
-class RequestHandler(SimpleHTTPRequestHandler):
-    pass
 
 
 class AutoReloadHTTPServerTests(unittest.TestCase):
