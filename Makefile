@@ -26,11 +26,26 @@ coverage:
 	coverage report
 	coverage html
 
+.PHONY: test-publish
+test-publish:
+	python -m twine upload -r pypitest dist/* --verbose
+
+.PHONY: publish
+publish:
+	python -m twine upload -r pypi dist/* --verbose
+
+.PHONY: build
+build:
+	python -m build --no-isolation --sdist --wheel
+
 .PHONY: help
 help:
-	@echo "setup  - install the development requirements"
-	@echo "clean  - remove Python artifacts"
-	@echo "lint   - check style with flake8"
-	@echo "format - format code with black"
-	@echo "test   - run tests with pytest"
-	@echo "help   - see this message"
+	@echo "build        - build the package for distribution"
+	@echo "publish      - publish the package"
+	@echo "test-publish - perform a test run of publishing the package"
+	@echo "setup        - install the development requirements"
+	@echo "clean        - remove Python artifacts"
+	@echo "lint         - check style with flake8"
+	@echo "format       - format code with black"
+	@echo "test         - run tests with pytest"
+	@echo "help         - see this message"
