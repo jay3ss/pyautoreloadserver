@@ -25,7 +25,7 @@ def main():
     parser.add_argument(
         "-n",
         action="store",
-        dest="name",
+        dest="host",
         default="localhost",
         type=str,
         help="The host name to use",
@@ -33,7 +33,11 @@ def main():
 
     args = parser.parse_args()
 
-    server = AutoReloadHTTPServer(port=args.port, root=args.root)
+    server = AutoReloadHTTPServer(
+        port=args.port,
+        root=args.root,
+        host=args.host,
+    )
     server.serve()
 
 
