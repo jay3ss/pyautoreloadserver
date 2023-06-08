@@ -1,5 +1,5 @@
 import unittest
-from http.server import HTTPServer, SimpleHTTPRequestHandler
+from http.server import SimpleHTTPRequestHandler
 from multiprocessing import Process
 from pathlib import Path
 
