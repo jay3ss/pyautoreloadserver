@@ -1,6 +1,6 @@
 import time
 import unittest
-from http.server import BaseHTTPRequestHandler, HTTPServer
+from http.server import HTTPServer, SimpleHTTPRequestHandler
 from multiprocessing import Process
 from pathlib import Path
 
@@ -12,7 +12,7 @@ class Server(HTTPServer):
     pass
 
 
-class RequestHandler(BaseHTTPRequestHandler):
+class RequestHandler(SimpleHTTPRequestHandler):
     pass
 
 
@@ -58,7 +58,7 @@ class AutoReloadHTTPServerTests(unittest.TestCase):
             self.client.open("/")
 
     def test_custom_request_handler(self):
-        class CustomRequestHandler(BaseHTTPRequestHandler):
+        class CustomRequestHandler(SimpleHTTPRequestHandler):
             def do_GET(self):
                 self.send_response(200)
                 self.send_header("Content-type", "text/plain")
