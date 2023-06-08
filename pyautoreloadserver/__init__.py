@@ -1,11 +1,11 @@
 from .pyautoreloadserver import (
     AutoReloadHTTPServer,
+    BaseServerClass,
     RequestHandler,
-    Server,
 )
 
 __all__ = [
     "AutoReloadHTTPServer",
+    "BaseServerClass",
     "RequestHandler",
-    "Server",
 ]
