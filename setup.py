@@ -15,7 +15,7 @@ setup(
     description="A simple HTTP server that reloads when a file change is detected",
     url="https://github.com/jay3ss/pyautoreloadserver",
     long_description=readme,
-    long_description_content_type='text/markdown',
+    long_description_content_type="text/markdown",
     packages=find_packages(),
     classifiers=[
         "Development Status :: 5 - Production/Stable",
